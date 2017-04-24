@@ -1,1 +1,8 @@
-#mapid {height: 300px;}
+#mapid {
+  height: 560px;
+  width: 100%
+}
+
+#baseMaps {
+  'color: gray'
+}

@@ -5,16 +5,35 @@
 
 //function to instantiate the Leaflet map
 function createMap(){
+
+    //create the layers to make the maps
+    var base = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    });
+    //     amphibians = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    // });
+        imageUrl = 'img/amphibian_richness_10km_all.jpg',
+        imageBounds = [[76, -180],[-60, 180]];
+
     //create the map
     var map = L.map('mapid', {
         center: [20, 0],
-        zoom: 2
+        zoom: 2,
+        maxBounds:[
+          [70, 176],
+          [-48, -130]
+        ],
+        // layers: [base, amphibians]
     });
 
-    //add OSM base tilelayer
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
+    // var baseMaps = {
+    //   "Base": base,
+    //   "All Amphibians": amphibians
+    // };
+
+    // L.control.layers(baseMaps).addTo(map);
+    L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
  //call getData function
     getData(map);
