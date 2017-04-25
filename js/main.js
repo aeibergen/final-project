@@ -18,37 +18,54 @@ function createMap(){
     });
 
     //create the layers to make the maps
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
+     L.tileLayer('http://korona.geog.uni-heidelberg.de/tiles/roadsg/x={x}&y={y}&z={z}', {
+	maxZoom: 19,
+	attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	}).addTo(map);
 
-    //create option to 
-    // var noneUrl = 'img/.jpg',
-    // 	noneBounds = [];
+    //create option to have no biodiversity overlay 
+    var noneUrl = 'img/.jpg',
+    	noneBounds = [];
+   	var none = L.imageOverlay(noneUrl, noneBounds);
 
-   	// var none = L.imageOverlay(noneUrl, noneBounds);
+   	var amphibianUrl = 'img/amphibian_richness_10km_all.png',
+    	amphibianBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var amphibians = L.imageOverlay(amphibianUrl, amphibianBounds);
+
+    var caecilianUrl = 'img/caecilian_richness_10km.png',
+    	caecilianBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var caecilians = L.imageOverlay(caecilianUrl, caecilianBounds);
+
+    var anuraUrl = 'img/frog_richness_10km.png',
+    	anuraBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var anura = L.imageOverlay(anuraUrl, anuraBounds);
+
+    var caudataUrl = 'img/salamander_richness_10km.png',
+    	caudataBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var caudata = L.imageOverlay(caudataUrl, caudataBounds);
 
     var psittaciformesUrl = 'img/psittaciformes_richness.png',
         psittaciformesBounds = [[84.65, -220.9],[-62.24, 220.85]];
-
     var psittaciformes = L.imageOverlay(psittaciformesUrl, psittaciformesBounds);
 
-    // var amphibianUrl = 'img/amphibian_richness_10km_all.jpg',
-    // 	amphibianBounds = [[76, -180],[-60, 180]];
-
-    // var amphibians = L.imageOverlay(amphibianUrl, amphibianBounds);
+    var passeriformesUrl = 'img/passeriformes_richness.png',
+    	passeriformesBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var passeriformes = L.imageOverlay(passeriformesUrl, passeriformesBounds)
 
     var songbirdsUrl = 'img/songbirds_richness.png',
     	songbirdsBounds = [[84.65, -220.9],[-62.24, 220.85]];
-
     var songbirds = L.imageOverlay(songbirdsUrl, songbirdsBounds);
 
 
     //category names for toggle layers
     var animals = {
-    	// "None": none,
+    	"Overlays Off": none,
+    	"All Amphibians": amphibians,
+    	"Caecilian": caecilians,
+    	"Anura": anura,
+    	"Caudata": caudata,
     	"Psittaciformes": psittaciformes,
-    	// "All Amphibians": amphibians,
+    	"Passeriformes": passeriformes,
     	"Songbirds": songbirds
     };
 
