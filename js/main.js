@@ -6,16 +6,6 @@
 //function to instantiate the Leaflet map
 function createMap(){
 
-    //create the layers to make the maps
-    var base = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    });
-    //     amphibians = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    // });
-        imageUrl = 'img/amphibian_richness_10km_all.jpg',
-        imageBounds = [[76, -180],[-60, 180]];
-
     //create the map
     var map = L.map('mapid', {
         center: [20, 0],
@@ -27,29 +17,62 @@ function createMap(){
         // layers: [base, amphibians]
     });
 
-    // var baseMaps = {
-    //   "Base": base,
-    //   "All Amphibians": amphibians
+    //create the layers to make the maps
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    //create option to 
+    // var noneUrl = 'img/.jpg',
+    // 	noneBounds = [];
+
+   	// var none = L.imageOverlay(noneUrl, noneBounds);
+
+    var psittaciformesUrl = 'img/psittaciformes_richness.png',
+        psittaciformesBounds = [[84.65, -220.9],[-62.24, 220.85]];
+
+    var psittaciformes = L.imageOverlay(psittaciformesUrl, psittaciformesBounds);
+
+    // var amphibianUrl = 'img/amphibian_richness_10km_all.jpg',
+    // 	amphibianBounds = [[76, -180],[-60, 180]];
+
+    // var amphibians = L.imageOverlay(amphibianUrl, amphibianBounds);
+
+    var songbirdsUrl = 'img/songbirds_richness.png',
+    	songbirdsBounds = [[84.65, -220.9],[-62.24, 220.85]];
+
+    var songbirds = L.imageOverlay(songbirdsUrl, songbirdsBounds);
+
+
+    //category names for toggle layers
+    var animals = {
+    	// "None": none,
+    	"Psittaciformes": psittaciformes,
+    	// "All Amphibians": amphibians,
+    	"Songbirds": songbirds
+    };
+
+    //  //call getData function
+    // var overlayMaps = {
+    // 	"Hotspots": getData(map)
     // };
 
-    // L.control.layers(baseMaps).addTo(map);
-    L.imageOverlay(imageUrl, imageBounds).addTo(map);
-
- //call getData function
-    getData(map);
+    //add animals raster information to map
+    L.control.layers(animals).addTo(map);
 };
 
-//function to retrieve the data and place it on the map
-function getData(map){
-    //load the data
-    $.ajax("data/hotspotData.geojson", {
-        dataType: "json",
-        success: function(response){
 
-            //create a Leaflet GeoJSON layer and add it to the map
-            L.geoJson(response).addTo(map);
-        }
-    });
-};
+// //function to retrieve the data and place it on the map
+// function getData(map){
+//     //load the data
+//     $.ajax("data/hotspotData.geojson", {
+//         dataType: "json",
+//         success: function(response){
+
+//             //create a Leaflet GeoJSON layer and add it to the map
+//             L.geoJson(response).addTo(map);
+//         }
+//     });
+// };
 
 $(document).ready(createMap);
