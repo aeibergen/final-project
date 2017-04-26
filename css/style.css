@@ -1,6 +1,14 @@
 #mapid {
   height: 560px;
-  width: 100%
+  width: 80%;
+  display: inline-block;
+}
+
+#panel {
+    width: 16%;
+    padding: 20px;
+    display: inline-block;
+    vertical-align: top;
 }
 
 /*#baseMaps {
@@ -12,5 +20,5 @@
 }*/
 
 /*#mapinfo {
-	
+
 }*/

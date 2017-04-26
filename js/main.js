@@ -14,16 +14,78 @@ function createMap(){
           [70, 176],
           [-48, -130]
         ],
-        // layers: [base, amphibians]
     });
 
     //create the layers to make the maps
-     L.tileLayer('http://korona.geog.uni-heidelberg.de/tiles/roadsg/x={x}&y={y}&z={z}', {
-	maxZoom: 19,
-	attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>; <a href="http://biodiversitymapping.org/wordpress/index.php/home/">Biodiversity Mapping</a>'
-	}).addTo(map);
+    L.tileLayer('http://korona.geog.uni-heidelberg.de/tiles/roadsg/x={x}&y={y}&z={z}', {
+       maxZoom: 19,
+	     attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>; <a href="http://biodiversitymapping.org/wordpress/index.php/home/">Biodiversity Mapping</a>'
+	  }).addTo(map);
 
-    //create option to have no biodiversity overlay 
+//call getData function
+getData(map);
+
+var geojson;
+
+    //function to retrieve map data
+    function getData(map){
+
+      //load the data
+      $.ajax("data/hotspotData.geojson", {
+        dataType: "json",
+        success: function(response){
+
+    //create a leaflet GeoJSON layer and add it to the map
+    geojson = L.geoJson(response, {
+      style: function (feature){
+        if(feature.properties.TYPE === 'hotspot_area'){
+          return {color: '#de2d26',
+                  weight: 2,
+                  stroke:1};
+        } else if(feature.properties.TYPE ==='outer_limit'){
+          return {color: '#fc9272',
+                  weight: 2,
+                  stroke: 0,
+                  fillOpacity: .5};
+        }
+      },
+
+
+      onEachFeature: function (feature,layer) {
+        var popupContent = "";
+        if (feature.properties) {
+          //loop to add feature property names and values to html string
+          popupContent += "<p>" + "Region" + ": " + feature.properties.NAME + "</p>";
+
+          if (feature.properties.TYPE ==="hotspot_area"){
+
+          popupContent += "<p>" + "Type: " + "Hotspot" + "</p>";
+
+          }
+
+
+          if (feature.properties.TYPE ==="outer_limit"){
+
+          popupContent += "<p>" + "Type: " + "Hotspot Outer Limit" + "</p>";
+
+          }
+
+
+          layer.bindPopup(popupContent);
+
+          };
+
+
+          layer.on({
+          mouseover: highlightFeature,
+          mouseout: resetHighlight,
+          click: panelInfo,
+          click: zoomToFeature
+          });
+        }
+    }).addTo(map);
+
+    //create option to have no biodiversity overlay
     var noneUrl = 'img/.jpg',
     	noneBounds = [];
    	var none = L.imageOverlay(noneUrl, noneBounds);
@@ -69,27 +131,49 @@ function createMap(){
     	"Songbirds": songbirds
     };
 
-    //  //call getData function
-    // var overlayMaps = {
-    // 	"Hotspots": getData(map)
-    // };
+    var overlay = {
+      "Hotspots": geojson
+    };
 
-    //add animals raster information to map
-    L.control.layers(animals).addTo(map);
+
+    //add heat maps and hotspot overlay to map
+    L.control.layers(animals, overlay).addTo(map);
+}
+
+});
+
 };
 
+function panelInfo (e) {
+  var layer = e.target;
+  $("#panel").html(layer.feature.properties.NAME);
+};
 
-// //function to retrieve the data and place it on the map
-// function getData(map){
-//     //load the data
-//     $.ajax("data/hotspotData.geojson", {
-//         dataType: "json",
-//         success: function(response){
+function highlightFeature(e) {
+  var layer = e.target;
+  layer.setStyle({
+        weight: 5,
+        stroke: 1,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+  });
 
-//             //create a Leaflet GeoJSON layer and add it to the map
-//             L.geoJson(response).addTo(map);
-//         }
-//     });
-// };
+  if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+      layer.bringToFront();
+  }
+  };
+
+function resetHighlight(e) {
+  var layer = e.target;
+  geojson.resetStyle(e.target);
+  layer.closePopup();
+};
+
+function zoomToFeature(e) {
+  map.fitBounds(e.target.getBounds());
+};
+
+};
 
 $(document).ready(createMap);
