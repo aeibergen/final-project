@@ -22,6 +22,7 @@ function createMap(){
 	     attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>; <a href="http://biodiversitymapping.org/wordpress/index.php/home/">Biodiversity Mapping</a>'
 	  }).addTo(map);
 
+
 //call getData function
 getData(map);
 
@@ -135,12 +136,13 @@ var geojson;
       "Hotspots": geojson
     };
 
-
     //add heat maps and hotspot overlay to map
     L.control.layers(animals, overlay).addTo(map);
 }
 
 });
+
+
 
 };
 
@@ -150,6 +152,7 @@ function panelInfo (e) {
 };
 
 function highlightFeature(e) {
+
   var layer = e.target;
   layer.setStyle({
         weight: 5,
@@ -157,6 +160,7 @@ function highlightFeature(e) {
         color: '#666',
         dashArray: '',
         fillOpacity: 0.7
+
   });
 
   if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
@@ -175,5 +179,6 @@ function zoomToFeature(e) {
 };
 
 };
+
 
 $(document).ready(createMap);
