@@ -14,6 +14,8 @@ function createMap(){
           [70, 176],
           [-48, -130]
         ],
+        minZoom: 2,
+        maxZoom: 6,
     });
 
     //create the layers to make the maps
