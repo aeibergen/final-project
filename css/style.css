@@ -1,15 +1,20 @@
 
 #mapid {
   height: 560px;
-  width: 80%;
+  width: 64%;
   display: inline-block;
 }
 
-#panel {
+#panelleft {
     width: 16%;
     padding: 20px;
     display: inline-block;
     vertical-align: top;
+}
+
+#panelright {
+  width: 16%;
+  float: right;
 }
 
 #controls {
@@ -39,21 +44,30 @@
 
 h1 {
 	text-align: center;
+  font-family: 'Alegreya', serif;
+  line-height: 46px;
+  font-size: 40px;
+}
+
+h2 {
+  font-size: 1.5em;
+  font-family: 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
+  line-height: 23px;
+  letter-spacing: 1.5px;
 }
 
 p {
 	font-size: 1em;
 	text-indent:50px;
+  font-family: 'Roboto', sans-serif;
+  line-height: 23px;
 }
 
 h3 {
 	font-size: 1.25em;
+  font-family: 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
+  line-height: 23px;
+  letter-spacing: 1px;
 }
-
-/*#baseMaps {
-  'color: gray';
-}*/
-
-/*.leaflet-control-layers-toggle {
-
-}*/

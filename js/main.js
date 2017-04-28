@@ -86,7 +86,7 @@ var geojson;
           click: zoomToFeature
           });
         }
-    });
+    }).addTo(map);
 
     //create option to have no biodiversity overlay
     var noneUrl = 'img/.jpg',
@@ -208,7 +208,7 @@ var geojson;
 
     //add heat maps and hotspot overlay to map
     // L.control.layers(animals, overlay).addTo(map);
-    
+
     var control = L.control.layers(animals, overlay, {collapsed:false});
         control._map = map;
     var controlDiv = control.onAdd(map);
