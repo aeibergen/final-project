@@ -86,7 +86,7 @@ var geojson;
           click: zoomToFeature
           });
         }
-    }).addTo(map);
+    });
 
     //create option to have no biodiversity overlay
     var noneUrl = 'img/.jpg',
@@ -109,18 +109,73 @@ var geojson;
     	caudataBounds = [[84.65, -220.9],[-62.24, 220.85]];
     var caudata = L.imageOverlay(caudataUrl, caudataBounds);
 
+    var threatenedaUrl = 'img/threatened_amp.png',
+        threatenedaBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var threateneda = L.imageOverlay(threatenedaUrl, threatenedaBounds);
+
+    var birdsUrl ='img/birds.png',
+        birdsBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var birds = L.imageOverlay(birdsUrl, birdsBounds);
+
     var psittaciformesUrl = 'img/psittaciformes_richness.png',
         psittaciformesBounds = [[84.65, -220.9],[-62.24, 220.85]];
     var psittaciformes = L.imageOverlay(psittaciformesUrl, psittaciformesBounds);
 
     var passeriformesUrl = 'img/passeriformes_richness.png',
-    	passeriformesBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    	   passeriformesBounds = [[84.65, -220.9],[-62.24, 220.85]];
     var passeriformes = L.imageOverlay(passeriformesUrl, passeriformesBounds)
+
+    var nonpasseriformesUrl = 'img/nonPasseriformes.png',
+        nonpasseriformesBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var nonpasseriformes = L.imageOverlay(nonpasseriformesUrl, nonpasseriformesBounds)
+
+    var hummingbirdsUrl = 'img/hummingbirds.png',
+        hummingbirdsBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var hummingbirds = L.imageOverlay(hummingbirdsUrl, hummingbirdsBounds)
 
     var songbirdsUrl = 'img/songbirds_richness.png',
     	songbirdsBounds = [[84.65, -220.9],[-62.24, 220.85]];
     var songbirds = L.imageOverlay(songbirdsUrl, songbirdsBounds);
 
+    var threatenedbUrl = 'img/threatened_birds.png',
+      threatenedbBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var threatenedb = L.imageOverlay(threatenedbUrl, threatenedbBounds);
+
+    var mammalsUrl = 'img/mammals.png',
+        mammalsBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var mammals = L.imageOverlay(mammalsUrl, mammalsBounds);
+
+    var carnivoraUrl = 'img/carnivora.png',
+        carnivoraBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var carnivora = L.imageOverlay(carnivoraUrl, carnivoraBounds);
+
+    var cetartiodactylaUrl = 'img/cetartiodactyla.png',
+        cetartiodactylaBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var cetartiodactyla = L.imageOverlay(cetartiodactylaUrl, cetartiodactylaBounds);
+
+    var chiropteraUrl = 'img/chiroptera_bats.png',
+        chiropteraBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var chiroptera = L.imageOverlay(chiropteraUrl, chiropteraBounds);
+
+    var eulipotyphlaUrl = 'img/eulipotyphla.png',
+        eulipotyphlaBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var eulipotyphla = L.imageOverlay(eulipotyphlaUrl, eulipotyphlaBounds);
+
+    var marsupialsUrl = 'img/marsupials.png',
+        marsupialsBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var marsupials = L.imageOverlay(marsupialsUrl, marsupialsBounds);
+
+    var primatesUrl = 'img/primates.png',
+        primatesBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var primates = L.imageOverlay(primatesUrl, primatesBounds);
+
+    var rodentiaUrl = 'img/rodentia.png',
+        rodentiaBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var rodentia = L.imageOverlay(rodentiaUrl, rodentiaBounds);
+
+    var threatenedmUrl = 'img/threatened_mammals.png',
+        threatenedmBounds = [[84.65, -220.9],[-62.24, 220.85]];
+    var threatenedm = L.imageOverlay(threatenedmUrl, threatenedmBounds);
 
     //category names for toggle layers
     var animals = {
@@ -129,9 +184,22 @@ var geojson;
     	"Caecilian": caecilians,
     	"Anura": anura,
     	"Caudata": caudata,
+      "Threatened Amphibians": threateneda,
+      "Birds": birds,
     	"Psittaciformes": psittaciformes,
     	"Passeriformes": passeriformes,
-    	"Songbirds": songbirds
+      "NonPasseriformes": nonpasseriformes,
+    	"Songbirds": songbirds,
+      "Threatened Birds": threatenedb,
+      "All Mammals": mammals,
+      "Carnivora": carnivora,
+      "Cetartiodactyla": cetartiodactyla,
+      "Chiroptera": chiroptera,
+      "Eulipotyphla": eulipotyphla,
+      "Marsupials": marsupials,
+      "Primates": primates,
+      "Rodentia": rodentia,
+      "Threatened Mammals": threatenedm
     };
 
     var overlay = {
@@ -139,9 +207,16 @@ var geojson;
     };
 
     //add heat maps and hotspot overlay to map
-    L.control.layers(animals, overlay).addTo(map);
-}
+    // L.control.layers(animals, overlay).addTo(map);
+    
+    var control = L.control.layers(animals, overlay, {collapsed:false});
+        control._map = map;
+    var controlDiv = control.onAdd(map);
 
+    document.getElementById('controls').appendChild(controlDiv);
+
+
+}
 });
 
 

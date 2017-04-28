@@ -12,6 +12,18 @@
     vertical-align: top;
 }
 
+#controls {
+	position: absolute;
+	top: 100px;
+	left: 50px;
+	width: 250px;
+}
+
+.leaflet-control {
+    float: none;
+    display: inline-block;
+}
+
 #mapinfo {
 	height: 1500px;
 	position: absolute;
@@ -37,7 +49,6 @@ p {
 h3 {
 	font-size: 1.25em;
 }
-
 
 /*#baseMaps {
   'color: gray';
