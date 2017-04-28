@@ -24,6 +24,21 @@ function createMap(){
 	     attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>; <a href="http://biodiversitymapping.org/wordpress/index.php/home/">Biodiversity Mapping</a>'
 	  }).addTo(map);
 
+    (function() {
+      var control = new L.Control({position:'topleft'});
+      control.onAdd = function(map) {
+          var azoom = L.DomUtil.create('a','resetzoom');
+          azoom.innerHTML = "[Reset Zoom]";
+          L.DomEvent
+            .disableClickPropagation(azoom)
+            .addListener(azoom, 'click', function() {
+              map.setView(map.options.center, map.options.zoom);
+            },azoom);
+          return azoom;
+        };
+      return control;
+    }())
+    .addTo(map);
 
 //call getData function
 getData(map);
@@ -34,7 +49,7 @@ var geojson;
     function getData(map){
 
       //load the data
-      $.ajax("data/hotspotData.geojson", {
+      $.ajax("data/hotspotInfo.geojson", {
         dataType: "json",
         success: function(response){
 
@@ -82,9 +97,11 @@ var geojson;
           layer.on({
           mouseover: highlightFeature,
           mouseout: resetHighlight,
-          click: panelInfo,
           click: zoomToFeature
           });
+          layer.on({
+          click: panelInfo,
+          })
         }
     }).addTo(map);
 
@@ -225,7 +242,29 @@ var geojson;
 
 function panelInfo (e) {
   var layer = e.target;
-  $("#panel").html(layer.feature.properties.NAME);
+  // "<p><b>City:</b> " + feature.properties.City + "</p>"
+  var panelContent = "<p><b>Hotspot Name:</b> " + layer.feature.properties.NAME + "</p>";
+
+  panelContent += "<p><b>Original Area (km<sup>2</sup>):</b> " + layer.feature.properties.ORIGINAL + "</p>";
+
+  panelContent += "<p><b>Remaining Area (km<sup>2</sup>):</b> " + layer.feature.properties.REMAINING + "</p>";
+
+  panelContent += "<p><b>Number of Plant Species:</b> " + layer.feature.properties.PLANTS + "</p>";
+
+  panelContent += "<p><b>Mammal Species:</b> " + layer.feature.properties.MAMMALS + "</p>";
+
+  panelContent += "<p><b>Bird Species:</b> " + layer.feature.properties.BIRDS + "</p>";
+
+  panelContent += "<p><b>Amphibian Species:</b> " + layer.feature.properties.AMPHIBIANS + "</p>";
+
+  panelContent += "<p><b>Threats to Biodiversity:</b> " + layer.feature.properties.THREATS + "</p>";
+
+  var picture = "<img src =" + layer.feature.properties.PIC1 + ">";
+
+  panelContent += picture;
+
+  $("#panelright").html(panelContent);
+
 };
 
 function highlightFeature(e) {
