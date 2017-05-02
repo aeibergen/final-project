@@ -30,7 +30,7 @@
 }
 
 #mapinfo {
-	height: 1500px;
+	height: 3600px;
 	position: absolute;
 	top: 660px;
 	left: 20px;
@@ -40,6 +40,16 @@
 #subamphibians {
 	font-size: 1em;
 	padding-left:50px;
+}
+
+#subbirds {
+  font-size: 1em;
+  padding-left: 50px;
+}
+
+#submammals {
+  font-size: 1em;
+  padding-left: 50px;
 }
 
 h1 {
