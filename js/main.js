@@ -57,11 +57,11 @@ var geojson;
     geojson = L.geoJson(response, {
       style: function (feature){
         if(feature.properties.TYPE === 'hotspot_area'){
-          return {color: '#de2d26',
+          return {color: '#3182bd',
                   weight: 2,
                   stroke:1};
         } else if(feature.properties.TYPE ==='outer_limit'){
-          return {color: '#fc9272',
+          return {color: '#9ecae1',
                   weight: 2,
                   stroke: 0,
                   fillOpacity: .5};
@@ -73,18 +73,18 @@ var geojson;
         var popupContent = "";
         if (feature.properties) {
           //loop to add feature property names and values to html string
-          popupContent += "<p>" + "Region" + ": " + feature.properties.NAME + "</p>";
+          popupContent += "<h5>" + "Region" + ": " + feature.properties.NAME + "</h5>";
 
           if (feature.properties.TYPE ==="hotspot_area"){
 
-          popupContent += "<p>" + "Type: " + "Hotspot" + "</p>";
+          popupContent += "<h5>" + "Type: " + "Hotspot" + "</h5>";
 
           }
 
 
           if (feature.properties.TYPE ==="outer_limit"){
 
-          popupContent += "<p>" + "Type: " + "Hotspot Outer Limit" + "</p>";
+          popupContent += "<h5>" + "Type: " + "Hotspot Outer Limit" + "</h5>";
 
           }
 
@@ -244,21 +244,21 @@ var geojson;
 function panelInfo (e) {
   var layer = e.target;
   // "<p><b>City:</b> " + feature.properties.City + "</p>"
-  var panelContent = "<p><b>Hotspot Name:</b> " + layer.feature.properties.NAME + "</p>";
+  var panelContent = "<h4><b>Hotspot Name:</b> " + "<a href='" + layer.feature.properties.LINK + "' target ='_blank'>" + layer.feature.properties.NAME + "</a>" + "</h4>"; 
 
-  panelContent += "<p><b>Original Area (km<sup>2</sup>):</b> " + layer.feature.properties.ORIGINAL + "</p>";
+  panelContent += "<h4><b>Original Area (km<sup>2</sup>):</b> " + layer.feature.properties.ORIGINAL + "</h4>";
 
-  panelContent += "<p><b>Remaining Area (km<sup>2</sup>):</b> " + layer.feature.properties.REMAINING + "</p>";
+  panelContent += "<h4><b>Remaining Area (km<sup>2</sup>):</b> " + layer.feature.properties.REMAINING + "</h4>";
 
-  panelContent += "<p><b>Number of Plant Species:</b> " + layer.feature.properties.PLANTS + "</p>";
+  panelContent += "<h4><b>Number of Plant Species:</b> " + layer.feature.properties.PLANTS + "</h4>";
 
-  panelContent += "<p><b>Mammal Species:</b> " + layer.feature.properties.MAMMALS + "</p>";
+  panelContent += "<h4><b>Mammal Species:</b> " + layer.feature.properties.MAMMALS + "</h4>";
 
-  panelContent += "<p><b>Bird Species:</b> " + layer.feature.properties.BIRDS + "</p>";
+  panelContent += "<h4><b>Bird Species:</b> " + layer.feature.properties.BIRDS + "</h4>";
 
-  panelContent += "<p><b>Amphibian Species:</b> " + layer.feature.properties.AMPHIBIANS + "</p>";
+  panelContent += "<h4><b>Amphibian Species:</b> " + layer.feature.properties.AMPHIBIANS + "</h4>";
 
-  panelContent += "<p><b>Threats to Biodiversity:</b> " + layer.feature.properties.THREATS + "</p>";
+  panelContent += "<h4><b>Threats to Biodiversity:</b> " + layer.feature.properties.THREATS + "</h4>";
 
   var picture = "<img src =" + layer.feature.properties.PIC1 + ">";
 
@@ -271,6 +271,7 @@ function panelInfo (e) {
 function highlightFeature(e) {
 
   var layer = e.target;
+  if (layer.feature.properties.TYPE ==="hotspot_area"){
   layer.setStyle({
         weight: 5,
         stroke: 1,
@@ -279,6 +280,18 @@ function highlightFeature(e) {
         fillOpacity: 0.7
 
   });
+};
+
+if (layer.feature.properties.TYPE ==="outer_limit"){
+layer.setStyle({
+      weight: 5,
+      stroke: 0,
+      color: '#666',
+      dashArray: '',
+      fillOpacity: 0.7
+
+});
+};
 
   if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
       layer.bringToFront();
