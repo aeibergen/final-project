@@ -30,26 +30,20 @@
 }
 
 #mapinfo {
-	height: 3600px;
+	height: 3800px;
 	position: absolute;
 	top: 660px;
 	left: 20px;
 	margin: 0 300px 0 300px;
 }
 
-#subamphibians {
+.sub {
 	font-size: 1em;
 	padding-left:50px;
 }
 
-#subbirds {
-  font-size: 1em;
-  padding-left: 50px;
-}
-
-#submammals {
-  font-size: 1em;
-  padding-left: 50px;
+.images {
+	padding-left:400px;
 }
 
 h1 {
@@ -70,12 +64,12 @@ h2 {
 p {
 	font-size: 1em;
 	text-indent:50px;
-  font-family: 'Roboto', sans-serif;
-  line-height: 23px;
+  	font-family: 'Roboto', sans-serif;
+  	line-height: 23px;
 }
 
 h3 {
-	font-size: 1.25em;
+  font-size: 1.25em;
   font-family: 'Roboto Condensed', sans-serif;
   text-transform: uppercase;
   line-height: 23px;
