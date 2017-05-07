@@ -105,11 +105,7 @@ var geojson;
         }
     }).addTo(map);
 
-    //create option to have no biodiversity overlay
-    var noneUrl = 'img/.jpg',
-    	noneBounds = [];
-   	var none = L.imageOverlay(noneUrl, noneBounds);
-
+    //load in all the biodiversity and threatened species image overlays
    	var amphibianUrl = 'img/amphibian_richness_10km_all.png',
     	amphibianBounds = [[84.65, -220.9],[-62.24, 220.85]];
     var amphibians = L.imageOverlay(amphibianUrl, amphibianBounds);
@@ -194,45 +190,80 @@ var geojson;
         threatenedmBounds = [[84.65, -220.9],[-62.24, 220.85]];
     var threatenedm = L.imageOverlay(threatenedmUrl, threatenedmBounds);
 
-    //category names for toggle layers
-    var animals = {
-    	"Overlays Off": none,
-    	"All Amphibians": amphibians,
-    	"Caecilian": caecilians,
-    	"Anura": anura,
-    	"Caudata": caudata,
-      "Threatened Amphibians": threateneda,
-      "Birds": birds,
-    	"Psittaciformes": psittaciformes,
-    	"Passeriformes": passeriformes,
-      "NonPasseriformes": nonpasseriformes,
-      "Trochilidae": hummingbirds,
-    	"Passeri": songbirds,
-      "Threatened Birds": threatenedb,
-      "All Mammals": mammals,
-      "Carnivora": carnivora,
-      "Cetartiodactyla": cetartiodactyla,
-      "Chiroptera": chiroptera,
-      "Eulipotyphla": eulipotyphla,
-      "Marsupials": marsupials,
-      "Primates": primates,
-      "Rodentia": rodentia,
-      "Threatened Mammals": threatenedm
-    };
+    //define structure of layers and overlays
+    var animals = [
+      {
+        groupName: "Amphibians",
+        expanded: true,
+        layers: {
+          "All Amphibians": amphibians,
+        	"Caecilian": caecilians,
+        	"Anura": anura,
+        	"Caudata": caudata
+        }
+      }, {
+        groupName: "Birds",
+        expanded: true,
+        layers: {
+          "Birds": birds,
+        	"Psittaciformes": psittaciformes,
+        	"Passeriformes": passeriformes,
+          "NonPasseriformes": nonpasseriformes,
+          "Trochilidae": hummingbirds,
+        	"Passeri": songbirds
+        }
+      }, {
+        groupName: "Mammals",
+        expanded: true,
+        layers: {
+          "All Mammals": mammals,
+          "Carnivora": carnivora,
+          "Cetartiodactyla": cetartiodactyla,
+          "Chiroptera": chiroptera,
+          "Eulipotyphla": eulipotyphla,
+          "Marsupials": marsupials,
+          "Primates": primates,
+          "Rodentia": rodentia
+        }
+      }, {
+        groupName: "Threatened Species",
+        expanded: true,
+        layers: {
+          "Threatened Amphibians": threateneda,
+          "Threatened Birds": threatenedb,
+          "Threatened Mammals": threatenedm
+        }
+      }
+    ];
 
-    var overlay = {
-      "Hotspots": geojson
-    };
+    var overlay = [
+      {
+        groupName: "Overlay",
+        expanded: true,
+        layers: {
+          "Hotspots": geojson
+        }
+      }
+    ];
+
+    //style the controls
+    var options = {
+      group_maxHeight: "200px",
+      exclusive: false,
+      collapsed: false
+    }
 
     //add heat maps and hotspot overlay to map
-    // L.control.layers(animals, overlay).addTo(map);
-
-    var control = L.control.layers(animals, overlay, {collapsed:false});
-        control._map = map;
-    var controlDiv = control.onAdd(map);
+    var control = L.Control.styledLayerControl(animals, overlay, options);
+         control._map = map;
+     var controlDiv = control.onAdd(map);
 
     document.getElementById('controls').appendChild(controlDiv);
 
+    // radioButtonText = $('input[name=leaflet-base-layers].leaflet-control-layers-selector:checked');
+    //
+    // var label_value = radioButtonText.closest('label').find('span').html();
+    // alert(label_value);
 
 }
 });
@@ -244,7 +275,7 @@ var geojson;
 function panelInfo (e) {
   var layer = e.target;
   // "<p><b>City:</b> " + feature.properties.City + "</p>"
-  var panelContent = "<h4><b>Hotspot Name:</b> " + "<a href='" + layer.feature.properties.LINK + "' target ='_blank'>" + layer.feature.properties.NAME + "</a>" + "</h4>"; 
+  var panelContent = "<h4><b>Hotspot Name:</b> " + "<a href='" + layer.feature.properties.LINK + "' target ='_blank'>" + layer.feature.properties.NAME + "</a>" + "</h4>";
 
   panelContent += "<h4><b>Original Area (km<sup>2</sup>):</b> " + layer.feature.properties.ORIGINAL + "</h4>";
 
