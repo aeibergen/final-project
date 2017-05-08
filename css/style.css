@@ -19,7 +19,7 @@
 
 #controls {
 	position: absolute;
-	top: 110px;
+	top: 150px;
 	left: 50px;
 	width: 250px;
 }
@@ -30,9 +30,9 @@
 }
 
 #mapinfo {
-	height: 3800px;
+	height: 200px;
 	position: absolute;
-	top: 660px;
+	top: 720px;
 	left: 20px;
 	margin: 0 300px 0 300px;
 }
@@ -50,6 +50,7 @@ h1 {
 	text-align: center;
   font-family: 'Alegreya', serif;
   font-size: 40px;
+  margin-bottom: -30px;
 }
 
 h2 {
@@ -94,4 +95,17 @@ h6 {
   font-size: 1em;
   letter-spacing: 1px;
   font-style: normal;
+  padding: -10px;
+}
+
+.legend {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    background: rgba(255,255,255, 0.9);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    padding: 6px 8px;
+    width: 90px;
+    line-height: 18px;
+    color: #555;
 }
