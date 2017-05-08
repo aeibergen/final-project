@@ -260,10 +260,7 @@ var geojson;
 
     document.getElementById('controls').appendChild(controlDiv);
 
-    // radioButtonText = $('input[name=leaflet-base-layers].leaflet-control-layers-selector:checked');
-    //
-    // var label_value = radioButtonText.closest('label').find('span').html();
-    // alert(label_value);
+  
 
 }
 });
